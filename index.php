@@ -305,7 +305,7 @@ $bot->cmd("/sh", function ($bashXmd) {
 $bot->cmd("/ocpr", function () {
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
-		"<code>" . Proxies() . "</code>"
+		"<code>" . OpenClashProxies() . "</code>"
 		. "\n\n" . $GLOBALS["randAds"]
 		,$GLOBALS["options"]);
 });
@@ -559,7 +559,7 @@ $bot->cmd("/myip", function () {
 $bot->cmd("/ocrl", function () {
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
-		"<code>" . Rules() . "</code>"
+		"<code>" . OpenClashRules() . "</code>"
 		. "\n" . $GLOBALS["randAds"]
         ,$GLOBALS["options"]);
 });
