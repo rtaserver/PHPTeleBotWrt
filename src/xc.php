@@ -28,29 +28,13 @@ function delayColor($input){
     }
 }
 
-function readXL(){
-
-        $rawConfig = file_get_contents("./xl");
-        $raw = explode("\n",$rawConfig);
-        $number = $raw[0];
-        return $number;
-    
-}
-
 function ADB(){
 
-        // Execute the ADB command for battery status and store the output in a variable
 $battery_status = shell_exec('adb shell dumpsys battery');
-
-// Execute the ADB command for signal strength and store the output in a variable
 $signal_status = shell_exec('adb shell dumpsys telephony.registry');
-
-// Execute the ADB command for device model and store the output in a variable
 $device_model = shell_exec('adb shell getprop ro.product.model');
-
-// android ver
 $android_ver = shell_exec('adb shell getprop ro.build.version.release');
-
+-
 // Use regular expressions to extract the battery level
 preg_match('/level: (\d+)/', $battery_status, $matches);
 $battery_level = $matches[1];
@@ -87,20 +71,6 @@ Android Version : $android_ver";
 
 return $result;
 
-}
-
-function MyXL($number){
-    if ($number == "") {
-        if (readXL() == null) {
-            return "Nomor kosong, Setting nomor dengan /setxl 087x";
-        }else{
-            $data = seeURL("https://sidompul.cloudaccess.host/cek.php?nomor=".readXL());
-            return $data;
-        } 
-    }else{
-        $data = seeURL("https://sidompul.cloudaccess.host/cek.php?nomor=$number");
-        return $data;
-    }
 }
 
 // Clash API https://dreamacro.github.io/clash/runtime/external-controller.html

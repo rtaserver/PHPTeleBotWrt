@@ -87,10 +87,6 @@ $bot->cmd("/cmdlist", function () {
  ↳/ocup : Update Openclash app only
  ↳/ocua : Update Openclash and all cores
 
-📁MyXL Commands
- ↳/myxl : Bandwidth usage 
- ↳/setxl 087 : Set default number
-
 📁File Manager
  ↳/ul : Upload a file to OpenWrt
  ↳/dl : Get/retrieve a file from OpenWrt
@@ -117,7 +113,15 @@ $bot->cmd("/cmdlist", function () {
  ↳/vnstati : Better Bandwidth usage 
  ↳/myip : Get ip details 
  ↳/speedtest : Speedtest 
- ↳/ping : Ping bot"
+ ↳/ping : Ping bot
+
+📁ADB Features (required adb installed)
+ ↳/adb commandSample : Run basic ADB command
+ ↳/adbdev : Android ID device lists
+ ↳/adbinfo [ADB_Android_ID] : Retrieve device information
+ ↳/adbrestnet [ADB_Android_ID] : Restart device network
+ ↳/adbsms [ADB_Android_ID]: Retrieve SMS from device ID"
+ 
 		. "\n\n" . $GLOBALS["randAds"]
 		,$GLOBALS["options"]);
 	unset($boot_stat);
@@ -575,38 +579,53 @@ $bot->cmd("/speedtest", function () {
 	$rmstrXq = shell_exec("rm result_SpeedTST");
 });
 
-//Myxl cmd
-$bot->cmd("/setxl", function ($number) {
-    if ($number == "") {
-        Bot::sendMessage(
-            "Masukan nomor yang mau di set sebagai default /setxl 087x",
-            $GLOBALS["options"]
-        );
-    } else {
-        shell_exec("echo '$number' > xl");
-        Bot::sendMessage(
-            "Nomer $number disetting sebagai default\nSilahkan gunakan cmd /myxl tanpa memasukkan nomor",
-            $GLOBALS["options"]
-        );
-    }
-});
-
-$bot->cmd("/myxl", function ($number) {
-    Bot::sendMessage("Checking number $number MyXL on progress...", $GLOBALS["options"]);
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-		"<code>" . MyXL($number) . "</code>"
-		. "\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-//Myxl cmd end
-
 //adb cmd
-$bot->cmd("/adb", function () {
+$bot->cmd("/adb_old", function () {
     Bot::sendMessage("<code>ADB on Progress</code>", $GLOBALS["options"]);
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
 		"<code>" . ADB() . "</code>"
+		. "\n\n" . $GLOBALS["randAds"]
+        ,$GLOBALS["options"]);
+});
+
+//adb new cmd
+$bot->cmd("/adb", function ($adbcmd1) {
+    Bot::sendMessage(
+		$GLOBALS["banner"] . "\n" .
+        "<code>" . shell_exec("adb $adbcmd1") . "</code>"
+		. "\n\n" . $GLOBALS["randAds"]
+        ,$GLOBALS["options"]);
+});
+
+$bot->cmd("/adbdev", function ($adbcmd2) {
+    Bot::sendMessage(
+		$GLOBALS["banner"] . "\n" .
+        "<code>" . shell_exec("adb devices") . "</code>"
+		. "\n\n" . $GLOBALS["randAds"]
+        ,$GLOBALS["options"]);
+});
+//$runsh = shell_exec("./$tzX > rpbXz && cat rpbXz");
+$bot->cmd("/adbinfo", function ($adbcmd3) {
+    Bot::sendMessage(
+		$GLOBALS["banner"] . "\n" .
+        "<code>" . shell_exec("src/plugins/adb-deviceinfo.sh $adbcmd3") . "</code>"
+		. "\n\n" . $GLOBALS["randAds"]
+        ,$GLOBALS["options"]);
+});
+
+$bot->cmd("/adbsms", function ($adbcmd4) {
+    Bot::sendMessage(
+		$GLOBALS["banner"] . "\n" .
+        "<code>" . shell_exec("src/plugins/adb-sms.sh $adbcmd4") . "</code>"
+		. "\n\n" . $GLOBALS["randAds"]
+        ,$GLOBALS["options"]);
+});
+
+$bot->cmd("/adbrestnet", function ($adbcmd5) {
+    Bot::sendMessage(
+		$GLOBALS["banner"] . "\n" .
+        "<code>" . shell_exec("src/plugins/adb-refresh-network.sh $adbcmd5") . "</code>"
 		. "\n\n" . $GLOBALS["randAds"]
         ,$GLOBALS["options"]);
 });
