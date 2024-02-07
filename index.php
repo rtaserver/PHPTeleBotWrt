@@ -609,25 +609,28 @@ $bot->cmd("/adbdev", function ($adbcmd2) {
 $bot->cmd("/adbinfo", function ($adbcmd3) {
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/adb-deviceinfo.sh $adbcmd3") . "</code>"
+        "<code>" . shell_exec("src/plugins/adb-deviceinfo.sh $adbcmd3 > tmpadbinfo && cat tmpadbinfo") . "</code>"
 		. "\n\n" . $GLOBALS["randAds"]
         ,$GLOBALS["options"]);
+	$rmrunsh = shell_exec("rm tmpadbinfo");
 });
 
 $bot->cmd("/adbsms", function ($adbcmd4) {
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/adb-sms.sh $adbcmd4") . "</code>"
+        "<code>" . shell_exec("src/plugins/adb-sms.sh $adbcmd4  > tmpadbsms && cat tmpadbsms") . "</code>"
 		. "\n\n" . $GLOBALS["randAds"]
         ,$GLOBALS["options"]);
+	$rmrunsh = shell_exec("rm tmpadbsms");
 });
 
 $bot->cmd("/adbrestnet", function ($adbcmd5) {
     Bot::sendMessage(
 		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/adb-refresh-network.sh $adbcmd5") . "</code>"
+        "<code>" . shell_exec("src/plugins/adb-refresh-network.sh $adbcmd5 > tmpadbrestnet && cat tmpadbrestnet") . "</code>"
 		. "\n\n" . $GLOBALS["randAds"]
         ,$GLOBALS["options"]);
+	$rmrunsh = shell_exec("rm tmpadbrestnet");
 });
 
 //Aria2 cmd
