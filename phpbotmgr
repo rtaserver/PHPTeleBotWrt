@@ -21,12 +21,12 @@ chkIPK () {
 	unset p7Pkg
 	unset p8Pkg
 
-	gbsPkg=$( opkg list-installed | grep -c "^git -\|^git-http -\|^bc -\|screen -" )
+	gbsPkg=$( opkg list-installed | grep -c "^git -\|^git-http -\|^bc -\|^screen -\|^httping -\|^adb -" )
 	p7Pkg=$( opkg list-installed | grep -c "^php7-cli -\|^php7-mod-curl -" )
 	p8Pkg=$( opkg list-installed | grep -c "^php8-cli -\|^php8-mod-curl -" )
 		
 	# Checking if packages installed
-	if [[ $gbsPkg -lt 4 ]] && [[ $p7Pkg -lt 2 || $p8Pkg -lt 2 ]]; then
+	if [[ $gbsPkg -lt 5 ]] && [[ $p7Pkg -lt 2 || $p8Pkg -lt 2 ]]; then
 		echo -e "All/some required packages is not installed correctly or something wrong...."
 		echo -e "Updating package repositories for $TLNAME..."
 		opkg update
@@ -94,13 +94,15 @@ if [[ $1 == "i" ]]; then
 
 	# Try install git, git-http, bc, screen is not installed
 	if [[ $gbsPkg -lt 4 ]]; then
-		echo -e "Try to install git, git-http, bc, screen if not installed..." 
+		echo -e "Try to install git, git-http, bc, screen, adb, httping if not installed..." 
 		insIPK git
 		insIPK git-http
 		insIPK bc
 		insIPK screen
+		insIPK adb
+		insIPK httping
 	else
-		echo -e "Package: git, git-http, bc, screen already installed." 
+		echo -e "Package: git, git-http, bc, screen, adb, httping already installed." 
 	fi
 
 	# Try install PHP if php8/php7 is not installed

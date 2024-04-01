@@ -36,8 +36,8 @@ do
     #Ping checker system
 	echo -e "Checking connection from device [${IPX}] to [${PINGCK}] with ping count [${PINGCT}] times...."
 	logger "helminetlog:: Checking connection from device [${IPX}] to [${PINGCK}] with ping count [${PINGCT}] times...."
-	ping -c ${PINGCT} ${PINGCK} > /tmp/anuping
-	if grep -q "100% packet loss" /tmp/anuping; then
+	httping -c ${PINGCT} ${PINGCK} > /tmp/anuping
+	if grep -q "100.00% failed" /tmp/anuping; then
 		echo -e "Network unavailable, restarting phone modem...."
 		logger "helminetlog:: Network unavailable, restarting phone modem...."
 	else
