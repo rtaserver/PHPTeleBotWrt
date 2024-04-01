@@ -117,10 +117,13 @@ $bot->cmd("/cmdlist", function () {
 
 📁ADB Features (required adb installed)
  ↳/adb commandSample : Run basic ADB command
- ↳/adbdev : Android ID device lists
- ↳/adbinfo [ADB_Android_ID] : Retrieve device information
- ↳/adbrestnet [ADB_Android_ID] : Restart device network
- ↳/adbsms [ADB_Android_ID]: Retrieve SMS from device ID"
+ ↳/adbdev : ADB Android ID device lists
+ ↳/adbinfo ADB_ID: Retrieve device information
+ ↳/adbrestnet ADB_ID DELAY: Restart device network
+ ↳/adbsms ADB_ID: Retrieve SMS from device ID
+ ↳*-Replace [ADB_ID] with your device id, take from [adb devices] command.
+ ↳*-You can check multiple [ADB_ID] by writing like [\"adbid001 adbid002 adbid003\"] with double quotes.
+ ↳*-[DELAY] is a delay (seconds) between disabling and re-enabling airplane mode for network restart."
  
 		. "\n\n" . $GLOBALS["randAds"]
 		,$GLOBALS["options"]);
