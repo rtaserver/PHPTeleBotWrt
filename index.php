@@ -69,14 +69,6 @@ $bot->cmd("/cmdlist", function () {
 		$GLOBALS["banner"] . "\n" .
 "📁PHPTeleBotWrt Manager
  ↳/botup : Update bot binaries
- ↳/botas : Add/remove bot to/from auto start on boot [$boot_stat]
- ↳/botcr : Add/remove bot to/from cron job [$cron_stat]
- 
- 📁Aria2 Commands
- ↳/aria2add : Add task
- ↳/aria2stats : Aria2 status
- ↳/aria2pause : Pause all
- ↳/aria2resume : Resume all
  
 📁OpenClash Commands
  ↳/oc : OC Information
@@ -518,15 +510,6 @@ $bot->cmd("/netcl", function () {
         ,$GLOBALS["options"]);
 });
 
-// Firewall rule lists
-$bot->cmd("/fwlist", function () {
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/fwlist.sh") . "</code>"
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-
 // Ifconfig
 $bot->cmd("/ifcfg", function ($iface) {
     if ($iface === null) {
@@ -636,41 +619,6 @@ $bot->cmd("/adbrestnet", function ($adbcmd5) {
 	$rmrunsh = shell_exec("rm tmpadbrestnet");
 });
 
-//Aria2 cmd
-$bot->cmd("/aria2add", function ($url) {
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/add.sh $url") . "</code>"
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-
-$bot->cmd("/aria2stats", function () {
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/stats.sh") . "</code>"
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-
-$bot->cmd("/aria2pause", function () {
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/pause.sh") . "</code>"
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-
-$bot->cmd("/aria2resume", function () {
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-        "<code>" . shell_exec("src/plugins/resume.sh") . "</code>"
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-});
-
-//Aria2 cmd end
-
 // phpbotmgr update
 $bot->cmd("/botup", function () {
     Bot::sendMessage(
@@ -711,33 +659,6 @@ $bot->cmd("/botas", function () {
 		
 	unset($boot_stat1);
 	unset($boot_stat2);
-});
-
-// phpbotmgr cron
-$bot->cmd("/botcr", function () {
-    $check_cron_stat = shell_exec("grep -c 'PHPTeleBotWrt' '/etc/crontabs/root'");
-    if ($check_cron_stat === 0) {
-        $cron_stat1 = "Activating";
-        $cron_stat2 = "activated";
-    } else {
-        $cron_stat1 = "Deactivating";
-        $cron_stat2 = "deactivated";
-    }
-	
-    Bot::sendMessage(
-		"$cron_stat1 PHPTeleBotWrt to/from cronjob scheduled task..."
-        ,$GLOBALS["options"]);
-    Bot::sendMessage(
-		"<code>" . shell_exec("chmod 0755 phpbotmgr && ./phpbotmgr t") . "</code>"
-        ,$GLOBALS["options"]);
-    Bot::sendMessage(
-		$GLOBALS["banner"] . "\n" .
-		"PHPTeleBotWrt cronjob scheduled task $cron_stat2..."
-		. "\n\n" . $GLOBALS["randAds"]
-        ,$GLOBALS["options"]);
-
-	unset($cron_stat1);
-	unset($cron_stat2);
 });
 
 //inline command
